@@ -12,12 +12,32 @@ using namespace std;
 
 class Library{
     public:
-        void load_from_txt(const string& filename, vector<Book>& library){
+        void load_from_txt(const string& filename, vector<Book>& library){ // used to take data from books.txt to library vector
             // take input from book.txt, split it (w/commas)
             ifstream in(filename); // kind of opening the file or telling the program tht this is the file going to be read
+            // ifstream is used to read from the file
+            //offstream is to write in a file
+            // in order to use the above, u have to use fstream library
             string line;
             while(getline(in,line)){
                 // getline() can be used to take input from a file or user(in or cin)
+                stringstream ss(line);
+                
+                string bid, title, author, category, status;
+                getline(ss, bid, ',');
+                getline(ss, title, ',');
+                getline(ss, author, ',');
+                getline(ss, category, ',');
+                getline(ss, status, ',');
+                int id = stoi(bid); //converts bid string variable to integer and stores in an updated variable
+                Book newBook = Book(id, title, author, category, status); // Create Book object
+                library.push_back(newBook);
+                // cout << "ID: " << bid << " | "
+                // << "Title: " << title << " | "
+                // << "Author: " << author << " | "
+                // << "Category: " << category << " | "
+                // << "Status: " << status << endl;
+
 
 
             }
@@ -61,6 +81,7 @@ class Library{
         }
         void remove_book(vector<Book>& library){
             //can we not use the find/search funtion here?
+
         }
 
 };
