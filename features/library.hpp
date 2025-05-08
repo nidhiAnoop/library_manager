@@ -2,9 +2,14 @@
 #define LIBRARY_HPP
 #include <iostream>
 #include <vector>
+#include <string>
 #include "book.hpp"
 #include <fstream> // to read/write a file
 #include <sstream> // to read line by line
+#include <algorithm>
+#include <cctype>
+#include <cstring>
+//#include <bits/stdc++.h>
 using namespace std;
 
 // hpp stands for header++ - used to put a just a class inside it. only contains class/template
@@ -79,9 +84,54 @@ class Library{
                 book.display();
             }
         }
+
+        string toLower(const string& str) {
+            string lower = str;
+            for (char& c : lower) {
+                c = tolower(c);
+            }
+            return lower;
+        }
+
+        void search_book(vector<Book>& library, string search_title){
+            search_title = toLower(search_title);
+            bool found = false;
+            for (Book &book : library){
+                //string lower_title = tolower(book.get_title());
+                string title = book.get_title();
+                string lower_title = toLower(title);
+                //string lower_title = transform(title.begin(), title.end(), title.begin(), tolower );
+                if (lower_title == search_title){
+                    book.display();
+                    found = true;
+                    break;
+                }
+            }
+            if (found == false){
+                cout << "Book not found in library!" << endl;
+            }
+        }
+        
         void remove_book(vector<Book>& library){
             //can we not use the find/search funtion here?
 
+        }
+        void sort_library(vector<Book> library , string choice){
+            if(choice == "title"){
+                sort(library.begin() , library.end() , [](Book a , Book b){ //comparater funtion
+                    return a.get_title() < b.get_title();
+                }); //why is there a semi colon here?
+
+            }
+            else if(choice == "author"){
+                sort(library.begin() , library.end() , [](Book a , Book b){ //comparater funtion
+                    return a.get_author() < b.get_author();
+                });
+            }
+            else{
+                cout << "Invalid choice!" << endl;
+            }
+            list_library(library);
         }
 
 };

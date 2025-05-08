@@ -20,6 +20,16 @@ class Book{
             this -> category = category;
             this -> status = status;
         }
+        void set_title(string title){
+            this->title = title;
+        }
+        string get_title(){
+            return title;
+        }
+        string get_author(){
+            return author;
+        }
+        
         void display(){
             //cout << title << author << ISBN << year << genre << endl;
             // cout << title << " by " << author << " (" << year << ") [ISBN: " << isbn << "] - Genre: " << genre << endl;

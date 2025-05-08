@@ -19,14 +19,15 @@ int main(){
     }
     */
     int choice;
-    while (choice != 5){
+    while (choice != 6){
         // menu displaying
         cout << "Library Manager Menu:\n";
         cout << "1. Add a book\n"; // \n can be used instead of the endln() funtion.
         cout << "2. Search a book\n";
         cout << "3. List a library\n";
         cout << "4. Remove a book\n";
-        cout << "4. Exit\n";
+        cout << "5. Sort the library\n";
+        cout << "6. Exit\n";
 
         // choice user input
         cout << "Enter the number of the action you want to perform: ";
@@ -41,20 +42,31 @@ int main(){
         }
         else if (choice == 2) {
         //Search a book
-        //l.search_book(**book);
+            string title;
+            cout << "Enter book name: " << endl;
+            cin.ignore();
+            getline(cin, title);
+            l.search_book(library, title);
         }
+
         else if (choice == 3) {
-        // List the entire library
-        l.list_library(library);
+            // List the entire library
+            l.list_library(library);
         }
         else if (choice == 4) {
-        // Remove a book
-        //l.remove_book(***book)
+            // Remove a book
+            //l.remove_book(***book)
+        }
+        else if (choice == 5) {
+            // sort the books
+            string choice;
+            cout << "Would you like to sort by title or author? : " << endl;
+            cin.ignore();
+            getline(cin, choice);
+            l.sort_library(library, choice);
         }
     }
     
-
-   
 
 }
 
