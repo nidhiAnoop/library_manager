@@ -112,10 +112,37 @@ class Library{
             }
         }
         
-        void remove_book(vector<Book>& library){
+        void remove_book(vector<Book>& library, string book_name){
             //can we not use the find/search funtion here?
+            for (Book &book : library){
+                //string lower_title = tolower(book.get_title());
 
+                string title = book.get_title(); // the original title name
+                string lower_title = toLower(title); // lowercase version of title
+
+                toLower(book_name); // lowercase version of user input book name
+
+                int bid = book.get_bid() - 1; // accessing book using index
+                //string lower_title = transform(title.begin(), title.end(), title.begin(), tolower );
+
+                if (lower_title == book_name){
+                    library.erase(library.begin() + bid);
+                    update_id(library , bid);
+                    break;
+                }
+            }
         }
+
+        void update_id(vector<Book>& library, int book_bid){
+            if (book_bid != library.size() - 1){
+                for (int i = book_bid; i < library.size(); i++){
+                    Book &book = library[i];
+                    book.set_bid(book.get_bid() - 1);
+                    cout << book.get_bid() <<  endl;
+                }
+            }
+        }
+        
         void sort_library(vector<Book> library , string choice){
             if(choice == "title"){
                 sort(library.begin() , library.end() , [](Book a , Book b){ //comparater funtion

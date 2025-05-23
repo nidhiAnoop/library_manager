@@ -54,8 +54,11 @@ int main(){
             l.list_library(library);
         }
         else if (choice == 4) {
-            // Remove a book
-            //l.remove_book(***book)
+            string title;
+            cout << "Enter the title of the book to remove: ";
+            cin.ignore();
+            getline(cin, title);
+            l.remove_book(library, title);
         }
         else if (choice == 5) {
             // sort the books

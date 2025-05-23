@@ -29,6 +29,12 @@ class Book{
         string get_author(){
             return author;
         }
+        int get_bid(){
+            return bid;
+        }
+        void set_bid(int new_bid){
+            this -> bid = new_bid;
+        }
         
         void display(){
             //cout << title << author << ISBN << year << genre << endl;
