@@ -62,11 +62,11 @@ int main(){
         }
         else if (choice == 5) {
             // sort the books
-            string choice;
+            string choice2;
             cout << "Would you like to sort by title or author? : " << endl;
             cin.ignore();
-            getline(cin, choice);
-            l.sort_library(library, choice);
+            getline(cin, choice2);
+            l.sort_library(library, choice2);
         }
     }
     

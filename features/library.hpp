@@ -96,7 +96,7 @@ class Library{
         void search_book(vector<Book>& library, string search_title){
             search_title = toLower(search_title);
             bool found = false;
-            for (Book &book : library){
+            for (Book &book : library){ // linear search
                 //string lower_title = tolower(book.get_title());
                 string title = book.get_title();
                 string lower_title = toLower(title);
@@ -142,23 +142,99 @@ class Library{
                 }
             }
         }
-        
-        void sort_library(vector<Book> library , string choice){
-            if(choice == "title"){
-                sort(library.begin() , library.end() , [](Book a , Book b){ //comparater funtion
-                    return a.get_title() < b.get_title();
-                }); //why is there a semi colon here?
 
+        vector<Book> merge(vector<Book>& library , int left, int mid, int right, string choice){
+            int n1 = (mid - left) + 1; //len of left array
+            int n2 = right - mid; //len of right array
+
+            vector<Book> L(n1);
+            vector<Book> R(n2);
+            for(int i = 0 ; i < n1; i++){
+                L[i] = library[left+i];
             }
-            else if(choice == "author"){
-                sort(library.begin() , library.end() , [](Book a , Book b){ //comparater funtion
-                    return a.get_author() < b.get_author();
-                });
+            for(int i = 0 ; i < n2; i++){
+                R[i] = library[mid + i + 1];
+            }
+
+            int i = 0 , j = 0; // indexes used to do incrimentation
+            // i is for left array, j is for right array, and k is for result array
+
+            vector<Book> result; // array where the sorted boks will enter while in sorting loop
+
+            while(i < n1 && j < n2){ // run until both left and right arrays have elements 
+                if (choice == "title"){
+                    if (L[i].get_title() < R[j].get_title()){ // compare with value comes first alphabetically, iTH value of L array or jTH value of R array
+                        result.push_back(L[i]); //push back the smaller value(alphabetically) into the result array
+                        i++;
+                    }
+                    else{
+                        result.push_back(R[j]);
+                        j++;
+                    }
+                }
+
+                else if(choice == "author"){
+                    if (L[i].get_author() < R[j].get_author()){
+                        result.push_back(L[i]);
+                        i++;
+                    }
+                    else{
+                        result.push_back(R[j]);
+                        j++;
+                    }
+                }
+            }
+            while(i < n1){
+                result.push_back(L[i]);
+                i++;
+            }
+            while(j < n2){
+                result.push_back(R[j]);
+                j++;
+            }
+            return result;
+        }
+
+        vector<Book> merge_sort(vector<Book>& library , int left, int right, string choice){ // left & right are indexes
+            if (left < right){
+                int mid = (left + right)/2;
+                merge_sort(library, left, mid , choice);
+                merge_sort(library, mid + 1, right, choice);
+                vector<Book> result = merge(library, left, mid, right , choice);
+                return result;
+            }
+
+            return library;
+        }
+
+        
+        void sort_library(vector<Book>& library , string choice){
+        //     if(choice == "title"){
+        //         sort(library.begin() , library.end() , [](Book a , Book b){ //comparater funtion
+        //             return a.get_title() < b.get_title();
+        //         }); //why is there a semi colon here?
+
+        //     }
+        //     else if(choice == "author"){
+        //         sort(library.begin() , library.end() , [](Book a , Book b){ //comparater funtion
+        //             return a.get_author() < b.get_author();
+        //         });
+
+
+        //     }
+        //     else{
+        //         cout << "Invalid choice!" << endl;
+        //     }
+        //     list_library(library);
+        // } cmmd + / to comment
+
+            if (choice == "title" || choice == "author"){
+                vector<Book> result = merge_sort(library, 0,library.size()-1 , choice);
+                list_library(result);
             }
             else{
-                cout << "Invalid choice!" << endl;
+                    cout << "Invalid choice!" << endl;
             }
-            list_library(library);
         }
 
 };
